@@ -1,0 +1,127 @@
+(:1:)
+let $movies := document("videos.xml")
+return $movies//video[./genre = "special"]/title
+,
+
+
+
+
+(:2:)
+let $movies := document("videos.xml")
+let $directors := $movies//director 
+for $director in distinct-values($directors)
+	let $count := count($directors[. eq $director])
+	where $count >= 2 and $director != ""
+	let $titles := $movies//video[./director = $director]/title
+	return (<director>{$director}</director>, $titles)  
+,
+
+
+
+
+
+(:3:)
+(let $videos := document("videos.xml")//video
+for $video in $videos
+order by $video/user_rating descending
+return $video/title)
+[position() = 1 to 10]
+,
+
+
+
+
+
+(:4:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count($movies[./actorRef = $a/@id])
+	 return <actor>{data($a)}<count>{$count}</count></actor>)
+	 }</counts>
+return $counts/actor[./count = max(..//count)]
+,
+
+
+
+
+
+(:5:)
+(let $videos := document("videos.xml")//video
+for $video in $videos
+	where $video//actorRef = "916503208" and $video//actorRef = "916503209"
+	order by $video/user_rating descending
+	return $video/title)[1]
+,
+
+
+
+(:6:)
+let $actorRefs := document("videos.xml")//video[./rating="PG-13" and ./year >= "1997" and ./year <= "2006"]/actorRef
+let $actors := document("videos.xml")//actor
+return data($actors[./@id = $actorRefs])
+,
+
+
+
+
+(:7:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count(distinct-values($db//video[./actorRef = $a/@id]/genre))
+	 return <actor>{data($a)}<count>{$count}</count></actor>)
+	 }</counts>
+return $counts/actor[./count = max(..//count)]
+,
+
+
+
+
+
+(:8 här ger alltså for-loopen i sums flera enstaka element och jag måste lägga taggar runt om för att det ska bli ett enda element:)
+let $db :=doc("videos.xml")
+let $directors := distinct-values($db//director)
+let $movies := $db//video
+let $sums := <sums>{
+	(for $d in $directors 
+	 let $sum := sum($movies[./director = $d]/user_rating)
+	 return <director>{$d}<sum>{$sum}</sum></director>)
+}</sums>
+return $sums/director[./sum = max(..//sum)]
+,
+
+
+
+
+
+(:9 Ok, måste sortera på ett object i taget och det måste vara det objektet jag sen returnerar:)
+(let $db := doc("videos.xml")
+let $recommended := $db//video[./genre = "horror" and (./dvd_stock > 0 or ./beta_stock > 0 or ./vhs_stock > 0)]
+for $movie in $recommended
+order by $movie//user_rating descending
+return $movie//title)[1]
+,
+
+
+
+
+(:10  Varför måste jag ha "" på genre-attributet? så är det inte i boken s.535:)
+
+let $db := doc("videos.xml")
+let $genres := $db//genre/choice
+for $g in $genres
+return <genre genre = "{$g}">{
+	let $movies := $db//video[./genre = $g]
+	for $m in $movies
+	order by $m/user_rating descending
+	return $m//title
+	}</genre>
+
+
+
+

@@ -1,0 +1,29 @@
+(:
+let $actorsID := document("videos.xml")//actors/actor/@id 
+let $movies := document("videos.xml")//video
+let $max := 0
+
+return(
+for $actorID in $actorsID
+let $count := count($movies/actorRef[. eq $actorID])
+let $max := if ($count > $max) then $count else $max
+where $count >= $max
+let $result := data($actorID/..[$count = $max]) 
+return $result
+)
+,
+:)
+
+
+
+
+let $actorsID := document("videos.xml")//actors/actor/@id 
+let $movies := document("videos.xml")//video
+
+return(
+for $actorID in $actorsID
+let $count := count($movies/actorRef[. eq $actorID])
+order by $count descending
+let $result := data($actorID/..[$count = 3]) 
+return $result
+)

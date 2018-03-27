@@ -1,0 +1,36 @@
+  country  | medals 
+-----------+--------
+ Argentina |      1
+ Palau     |      3
+ Sweden    |      1
+ France    |      1
+ Russia    |      1
+ Norway    |       
+(6 rows)
+
+        time         |   sport    
+---------------------+------------
+ 2020-08-14 12:00:00 | Ice Hockey
+(1 row)
+
+  country  
+-----------
+ Russia
+ Palau
+ Argentina
+ France
+ Argentina
+ Palau
+(6 rows)
+
+     arena     |  location  |        time         
+---------------+------------+---------------------
+ Ostermalms IP | Main track | 2020-08-13 10:00:00
+ Ostermalms IP | Main track | 2020-08-13 11:00:00
+(2 rows)
+
+     name      
+---------------
+ Hanh Haase
+ Eddie Kilduff
+(2 rows)

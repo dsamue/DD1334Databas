@@ -1,0 +1,66 @@
+ (:testkommentar:)
+(:
+let $movies := document("videos.xml")
+return $movies//genre
+:)
+
+
+(:1:)
+let $movies := document("videos.xml")
+return $movies//video[./genre = "special"]/title
+,
+
+
+(:2:)
+
+(:Varför funkar det inte att köra med group by? Inte en del av FLOWR-syntax?:)
+(:let $movies := document("videos.xml")
+let $director := $movies//director 
+return $director
+,:)
+
+
+let $movies := document("videos.xml")
+let $directors := $movies//director 
+
+return
+for $director in distinct-values($directors)
+let $count := count($directors[. eq $director])
+where $count >= 2 and $director != ""
+let $titles := $movies//video[./director = $director]/title
+return (<director>{$director}</director>, $titles)  
+,
+
+
+(:3:)
+(:Verkar alltså inte finnas nån form av limit-funktion? Känns också lite oklart att man sorterar på en video i taget:)
+(let $videos := document("videos.xml")//video
+for $video in $videos
+order by $video/user_rating descending
+return $video/title)
+[position() = 1 to 10]
+,
+
+(:4:)
+(:
+let $actorsID := document("videos.xml")//actors/actor/@id 
+let $movies := document("videos.xml")//video
+
+return(
+for $actorID in $actorsID
+let $count := count($movies/actorRef[. eq $actorID])
+order by $count descending
+let $result := data($actorID/..[$count = 3]) 
+return $result
+)
+,
+:)
+
+
+(:5:)
+(let $videos := document("videos.xml")//video
+for $video in $videos
+where some $ref in $video//actorRef satisfies $ref = "916503208"
+where some $ref in $video//actorRef satisfies $ref = "916503209"
+order by $video/user_rating descending
+return $video/title)[1]

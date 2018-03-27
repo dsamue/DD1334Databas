@@ -1,0 +1,32 @@
+        name        | count 
+--------------------+-------
+ Ingrid Manhem      |     1
+ Charlotte Markgren |     1
+ Mats Carlsson      |     1
+ Harald Lif         |     1
+ Svea Andersson     |     1
+(5 rows)
+
+     arena     
+---------------
+ Ostermalms IP
+ Ostermalms IP
+(2 rows)
+
+        name        |   sport   
+--------------------+-----------
+ Shayla Chesnut     | Bobsleigh
+ Ranee Kirkley      | Bobsleigh
+ Odette Casarez     | Bobsleigh
+ Amanda Tallon      | Slalom
+ Ruthe Hartsock     | Slalom
+ Lorraine Gully     | Slalom
+ Antionette Lechler | Slalom
+ Sueann Wang        | Slalom
+ Laurine Mckissick  | Slalom
+(9 rows)
+
+        name        
+--------------------
+ Charlotte Markgren
+(1 row)

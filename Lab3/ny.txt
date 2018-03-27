@@ -1,0 +1,70 @@
+let $nl := "&#10;"
+return concat($nl,"Uppgift 7:"),
+
+
+(:7:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count(distinct-values($db//video[./actorRef = $a/@id]/genre))
+	 return <actor count = "{$count}">{data($a)}</actor>)
+	 }</counts>
+let $result := data($counts/actor[@count = max(..//@count)])
+return concat("author = ", $result)
+,
+
+
+
+
+let $nl := "&#10;"
+return concat($nl,"Uppgift 4:"),
+
+(:4:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count($movies[./actorRef = $a/@id])
+	 return <actor count = "{$count}">{data($a)}</actor>)
+	 }</counts>
+return data($counts/actor[@count = max(..//@count)])
+,
+
+
+
+
+
+let $nl := "&#10;"
+return concat($nl,"Uppgift 8:"),
+
+(:8 här ger alltså for-loopen i sums flera enstaka element och jag måste lägga taggar runt om för att det ska bli ett enda element:)
+let $db :=doc("videos.xml")
+let $directors := distinct-values($db//director)
+let $movies := $db//video
+let $sums := <sums>{
+	(for $d in $directors 
+	 let $sum := sum($movies[./director = $d]/user_rating)
+	 return <director sum = "{$sum}">{$d}</director>)
+}</sums>
+return data($sums/director[@sum = max(..//@sum)])
+,
+
+
+
+(:8 testar variant:)
+let $db :=doc("videos.xml")
+let $directors := distinct-values($db//director)
+let $movies := $db//video
+let $sums := (
+	for $d in $directors 
+	let $sum := sum($movies[./director = $d]/user_rating)
+	return ($sum))
+	 
+return max($sums)
+
+
+
+

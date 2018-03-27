@@ -1,0 +1,5 @@
+Tips från asse:
+
+Kolla lite på min 2.9 - egentligen finns inget bra sätt att göra den uppgiften på så jag är i princip godkänd men det var ändå nåt litet på foreign key där jag kunde få hint i create.sql-filen
+
+Ok att redovisa på egen dator men helst via nestor. Annars iaf kunna köra hela filen direkt och få en output. 

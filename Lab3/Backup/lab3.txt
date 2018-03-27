@@ -1,0 +1,40 @@
+ (:testkommentar:)
+(:
+let $movies := document("videos.xml")
+return $movies//genre
+:)
+
+
+(:1:)
+let $movies := document("videos.xml")
+return $movies//video[./genre = "special"]/title
+,
+
+
+(:2:)
+
+(:Varför funkar det inte att köra med group by? Inte en del av FLOWR-syntax?:)
+(:let $movies := document("videos.xml")
+let $director := $movies//director 
+return $director
+,:)
+
+
+let $movies := document("videos.xml")
+let $directors := $movies//director 
+
+return
+for $director in distinct-values($directors)
+let $count := count($directors[. eq $director])
+where $count >= 2 and $director != ""
+let $titles := $movies//video[./director = $director]/title
+return (<director>{$director}</director>, $titles)  
+,
+
+
+(:3:)
+
+
+
+
+

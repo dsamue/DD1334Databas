@@ -1,0 +1,57 @@
+CREATE VIEW
+    isbn    |            title            
+------------+-----------------------------
+ 039480001X | The Cat in the Hat
+ 0451160916 | The Shining
+ 0394800753 | Bartholomew and the Oobleck
+ 0590445065 | Franklin in the Dark
+ 0694003611 | Goodnight Moon
+ 0679803335 | The Velveteen Rabbit
+ 0760720002 | Little Women
+ 0394900014 | The Cat in the Hat
+ 0385121679 | The Shining
+ 1885418035 | The Tell-Tale Heart
+ 0929605942 | The Tell-Tale Heart
+ 0441172717 | Dune
+ 044100590X | Dune
+ 0451457994 | 2001: A Space Odyssey
+ 0451198492 | 2001: A Space Odyssey
+ 0823015505 | Dynamic Anatomy
+ 0596000855 | Programming Python
+(17 rows)
+
+DROP VIEW
+psql:/Users/David/desktop/databas/lab1/klar/task2.sql:9: ERROR:  insert or update on table "editions" violates foreign key constraint "editions_book_id_fkey"
+DETAIL:  Key (book_id)=(12345) is not present in table "books".
+psql:/Users/David/desktop/databas/lab1/klar/task2.sql:15: ERROR:  new row for relation "editions" violates check constraint "integrity"
+DETAIL:  Failing row contains (5555, null, null, null, null).
+INSERT 0 1
+INSERT 0 1
+ book_id |    title     | author_id | subject_id | isbn | book_id | edition | publisher_id | publication_date 
+---------+--------------+-----------+------------+------+---------+---------+--------------+------------------
+   12345 | How I Insert |           |            | 5555 |   12345 |       1 |           59 | 2012-12-02
+(1 row)
+
+ subject_id 
+------------
+         10
+(1 row)
+
+UPDATE 1
+ subject 
+---------
+ Mystery
+(1 row)
+
+psql:/Users/David/desktop/databas/lab1/klar/task2.sql:39: ERROR:  update or delete on table "books" violates foreign key constraint "editions_book_id_fkey" on table "editions"
+DETAIL:  Key (book_id)=(12345) is still referenced from table "editions".
+DELETE 1
+DELETE 1
+ book_id | title | author_id | subject_id | isbn | book_id | edition | publisher_id | publication_date 
+---------+-------+-----------+------------+------+---------+---------+--------------+------------------
+(0 rows)
+
+psql:/Users/David/desktop/databas/lab1/klar/task2.sql:54: ERROR:  insert or update on table "books" violates foreign key constraint "books_subject_id_fkey"
+DETAIL:  Key (subject_id)=(3443) is not present in table "subjects".
+psql:/Users/David/desktop/databas/lab1/klar/task2.sql:66: ERROR:  syntax error at or near "FOREIGN"
+LINE 3:  FOREIGN KEY (subject_id) REFERENCES subjects(subject_id);

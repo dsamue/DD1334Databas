@@ -1,0 +1,1 @@
+t1.10 testa natural join ist för kommatecken fast samtidigt verkade det rätt lugnt sålänge jag hade min where-clause

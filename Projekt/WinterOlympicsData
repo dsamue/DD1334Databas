@@ -1,0 +1,147 @@
+
+COPY "locations" FROM stdin;
+5001	Hammarbybacken	Main track
+5002	Friends Arena	Main hall
+5003	Globen	Main hall
+5004	Globen	Annexet
+5005	Hovet	Main hall
+5006	Ostermalms IP	Main track
+\.
+
+COPY "officials" FROM stdin;
+4001	Charlotte Markgren	F
+4002	Harald Lif	M
+4003	Svea Andersson	F
+4004	Mats Carlsson	M
+4005	Ingrid Manhem	F
+\.
+
+COPY "atheletes" FROM stdin;
+2001	Hanh Haase	M
+2002	Vern Woelfel	M
+2003	Shayla Chesnut	F
+2004	Ranee Kirkley	F
+2005	Dan Barra	M
+2006	Mack Digiovanni	M
+2007	Thurman Harkness	M
+2008	Odette Casarez	F
+2009	David Steck	M
+2010	Reno Sinegal	M
+2011	Laurine Mckissick	F
+2012	Antionette Lechler	F
+2013	Sueann Wang	F
+2014	Eddie Kilduff	M
+2015	Genoveva Maynes	F
+2016	Amanda Tallon	F
+2017	Eddie Shanks	M
+2018	Ruthe Hartsock	F
+2019	Lorraine Gully	F
+2020	Ming Forand	M
+\.
+
+COPY "teams" FROM stdin;
+3001
+3002
+3003
+3004
+3005
+3006
+3007
+3008
+3009
+3010
+\.
+
+COPY "sports" FROM stdin;
+Slalom	F	False	2004	2003	2008
+Bobsleigh	F	False	2003	2008	2004
+Bobsleigh	M	False	2020	2010	2009
+Ice Hockey	M	True	3001	3002	3003
+\.
+
+COPY "competitions" FROM stdin;
+1001	5001	4001	2020-08-12 08:45:00	30	Slalom	F	A	1
+1002	5001	4002	2020-08-12 09:30:00	30	Slalom	F	B	1
+1003	5006	4004	2020-08-13 10:00:00	45	Bobsleigh	M	Null	Final
+1004	5006	4003	2020-08-13 11:00:00	45	Bobsleigh	F	Null	Final
+1005	5005	4005	2020-08-14 12:00:00	90	Ice Hockey	M	A	1
+\.
+
+
+COPY "competitors" FROM stdin;
+1001	2016
+1001	2018
+1001	2019
+1002	2012
+1002	2013
+1002	2011
+1003	2009
+1003	2010
+1003	2020
+1004	2003
+1004	2004
+1004	2008
+\.
+
+
+COPY "practice" FROM stdin;
+Bobsleigh	F	2003
+Bobsleigh	F	2004
+Bobsleigh	F	2008
+Bobsleigh	M	2009
+Bobsleigh	M	2010
+Bobsleigh	M	2020
+Slalom	F	2016
+Slalom	F	2018
+Slalom	F	2019
+Slalom	F	2012
+Slalom	F	2013
+Slalom	F	2011
+Ice Hockey	M	3001
+Ice Hockey	M	3002
+\.
+
+COPY "teammembers" FROM stdin;
+3001	2001	Goalie
+3001	2014	Goalie
+\.
+
+COPY "countrys" FROM stdin;
+Sweden
+Russia
+France
+Argentina
+Palau
+\.
+
+
+COPY "nationality" FROM stdin;
+Russia	2001
+Russia	2014
+Russia	3001
+Sweden	3002
+Argentina	3003
+France	3004
+Palau	2004
+France	2003
+France	2008
+Sweden	2020
+Argentina	2010
+Sweden	2009
+\.
+
+COPY "qualifications" FROM stdin;
+4001	F	Slalom
+4003	F	Bobsleigh
+4004	M	Bobsleigh
+4005	M	Ice Hockey
+\.
+
+COPY "sportlocations" FROM stdin;
+5001	Slalom
+5002	Figure Skating
+5003	Short Track Speed Skating
+5004	Curling
+5005	Ice Hockey
+5006	Bobsleigh
+\.

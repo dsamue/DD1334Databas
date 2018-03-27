@@ -1,0 +1,68 @@
+last_name | first_name 
+-----------+------------
+ King      | Stephen
+(1 row)
+
+        title         
+----------------------
+ Franklin in the Dark
+(1 row)
+
+ last_name | first_name 
+-----------+------------
+ Jackson   | Annie
+ Gould     | Ed
+ King      | Jenny
+ Morrill   | Royce
+ Black     | Jean
+ Anderson  | Jonathan
+ Brown     | Chuck
+ Holloway  | Adam
+ Becker    | Owen
+(9 rows)
+
+ title 
+-------
+ Dune
+(1 row)
+
+  sum   
+--------
+ 137.80
+(1 row)
+
+         title         
+-----------------------
+ Dune
+ 2001: A Space Odyssey
+ Little Women
+ The Velveteen Rabbit
+(4 rows)
+
+   name    |   sum   
+-----------+---------
+ Ace Books | 4566.00
+(1 row)
+
+  earned   
+-----------
+ -12789.85
+(1 row)
+
+ last_name | first_name 
+-----------+------------
+ Jackson   | Annie
+(1 row)
+
+    subject    
+---------------
+ Business
+ Cooking
+ Entertainment
+ History
+ Mystery
+ Poetry
+ Religion
+ Romance
+ Science
+(9 rows)

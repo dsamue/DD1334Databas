@@ -1,0 +1,183 @@
+(:
+let $actorsID := document("videos.xml")//actors/actor/@id 
+let $movies := document("videos.xml")//video
+let $max := 0
+
+return(
+for $actorID in $actorsID
+let $count := count($movies/actorRef[. eq $actorID])
+let $max := if ($count > $max) then $count else $max
+where $count >= $max
+let $result := data($actorID/..[$count = $max]) 
+return $result
+)
+,
+:)
+
+
+
+
+let $actorsID := document("videos.xml")//actors/actor/@id 
+let $movies := document("videos.xml")//video
+
+return(
+for $actorID in $actorsID
+let $count := count($movies/actorRef[. eq $actorID])
+order by $count descending
+let $result := data($actorID/..[$count = 3]) 
+return $result
+)
+
+
+
+(:5 - gammal med some:)
+(let $videos := document("videos.xml")//video
+for $video in $videos
+where some $ref in $video//actorRef satisfies $ref = "916503208"
+where some $ref in $video//actorRef satisfies $ref = "916503209"
+order by $video/user_rating descending
+return $video/title)[1]
+,
+
+
+
+(:gammal 6:)
+let $actorRefs := document("videos.xml")//video[./rating="PG-13" and ./year >= "1997" and ./year <= "2006"]/actorRef
+let $actors := document("videos.xml")//actor
+return distinct-values(
+for $actor in $actors 
+	for $actorRef in $actorRefs
+		where $actor/@id = $actorRef
+		return $actor)
+,
+
+
+
+
+
+(:Hyfsat fungerande 7a:)
+
+(let $db := document("videos.xml")
+let $ids := $db//actor/@id
+for $id in $ids 
+let $numGen := count(distinct-values($db//video[./actorRef = $id]/genre))
+order by $numGen descending
+return ($numGen, $id))[2]
+
+(:gamla 7an:)
+(:7:)
+let $db := document("videos.xml")
+let $ids := $db//actor/@id
+let $result :=
+(for $id in $ids 
+let $numGen := count(distinct-values($db//video[./actorRef = $id]/genre))
+order by $numGen descending
+return ($id))[1]
+return $db//actor[@id=$result]
+
+(:7:) som inte gick hem vid redovisning
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count(distinct-values($db//video[./actorRef = $a/@id]/genre))
+	 return <actor count = "$count">{data($a)}</actor>)
+	 }</counts>
+return ("actor = ",$counts/actor[@count = max(../actor/@count)])
+
+(:7 som bör funka vid redovisning:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count(distinct-values($db//video[./actorRef = $a/@id]/genre))
+	 return <actor count = "{$count}">{data($a)}</actor>)
+	 }</counts>
+return concat("author = ",(data($counts/actor[@count = max(..//@count)])))
+
+
+(:Ganska välfungerande 8:)
+let $db :=doc("videos.xml")
+let $directors := distinct-values($db//director)
+let $movies := $db//video
+let $sums :=(
+for $d in $directors 
+	let $sum := sum($movies[./director = $d]/user_rating)
+return <director>{$d}<sum>{$sum}</sum></director>
+)
+return max($sums//sum)
+
+
+
+
+
+
+(:10:)
+let $db := doc("videos.xml")
+let $genres := $db//genre/choice
+for $g in $genres
+return <genre genre = "{$g}">{
+	let $movies := $db//video[./genre = $g]
+	for $m in $movies
+	order by $m/user_rating descending
+	return $m//title
+	}</genre>
+
+
+
+(:Diverse försök efter redovisning där nog alla bör funka men jag gjorde några ändringar inför sista visning. :)
+
+let $nl := "&#10;"
+return concat($nl,"Uppgift 7:"),
+
+
+(:7:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count(distinct-values($db//video[./actorRef = $a/@id]/genre))
+	 return <actor count = "{$count}">{data($a)}</actor>)
+	 }</counts>
+let $result := data($counts/actor[@count = max(..//@count)])
+return concat("author = ", $result)
+,
+
+
+
+
+let $nl := "&#10;"
+return concat($nl,"Uppgift 4:"),
+
+(:4:)
+let $db :=doc("videos.xml")
+let $actors := $db//actors/actor
+let $movies := $db//video
+let $counts := <counts>{
+	(for $a in $actors 
+	 let $count := count($movies[./actorRef = $a/@id])
+	 return <actor count = "{$count}">{data($a)}</actor>)
+	 }</counts>
+return data($counts/actor[@count = max(..//@count)])
+,
+
+
+
+
+
+let $nl := "&#10;"
+return concat($nl,"Uppgift 8:"),
+
+(:8 här ger alltså for-loopen i sums flera enstaka element och jag måste lägga taggar runt om för att det ska bli ett enda element:)
+let $db :=doc("videos.xml")
+let $directors := distinct-values($db//director)
+let $movies := $db//video
+let $sums := <sums>{
+	(for $d in $directors 
+	 let $sum := sum($movies[./director = $d]/user_rating)
+	 return <director sum = "{$sum}">{$d}</director>)
+}</sums>
+return data($sums/director[@sum = max(..//@sum)])
